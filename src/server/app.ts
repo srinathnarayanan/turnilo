@@ -63,7 +63,7 @@ export default function createApp(serverSettings: ServerSettings, settingsManage
   });
 
   function getRoutePath(route: string): string {
-    const serverRoot = serverSettings.serverRoot;
+    const serverRoot = process.env.SINGLESTOREDB_APP_BASE_PATH || serverSettings.serverRoot;
     const prefix = serverRoot.length > 0 ? `/${serverRoot}` : "";
     return `${prefix}${route}`;
   }
