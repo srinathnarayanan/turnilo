@@ -63,7 +63,11 @@ export default function createApp(serverSettings: ServerSettings, settingsManage
   });
 
   function getRoutePath(route: string): string {
-    const serverRoot = process.env.SINGLESTOREDB_APP_BASE_PATH || serverSettings.serverRoot;
+    var base_path = undefined
+    if (!!process.env.SINGLESTOREDB_APP_BASE_PATH) {
+      base_path = process.env.SINGLESTOREDB_APP_BASE_PATH.replace(/^\/+|\/+$/g, '');
+    }
+    const serverRoot = base_path || serverSettings.serverRoot;
     const prefix = serverRoot.length > 0 ? `/${serverRoot}` : "";
     return `${prefix}${route}`;
   }
