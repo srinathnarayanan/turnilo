@@ -43,6 +43,10 @@ function favicon(options: ViewOptions): string {
 }
 
 export function layout(options: ViewOptions, content: string): string {
+  let authTokenParam = ""
+  if (!!process.env.SINGLESTOREDB_APP_TOKEN) {
+    authTokenParam = `&authToken=${process.env.SINGLESTOREDB_APP_TOKEN}`;
+  }
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,7 +57,7 @@ export function layout(options: ViewOptions, content: string): string {
   ${favicon(options)}
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
   <title>${options.title}</title>
-  <link rel="stylesheet" href="main.css?v=${options.version}">
+  <link rel="stylesheet" href="main.css?v=${options.version}${authTokenParam}">
 </head>
 <body>
 ${content}
